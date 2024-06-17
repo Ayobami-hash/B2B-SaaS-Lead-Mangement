@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/authContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface CardProps {}
 
@@ -31,6 +33,7 @@ const Login: React.FC<CardProps> = () => {
       try {
         await login({ email, password });
         setIsLoggedIn(true);
+        toast.success('Login successful!');
         router.push('/home'); // Navigate to the home page
       } catch (error) {
         console.error(error);
@@ -43,6 +46,7 @@ const Login: React.FC<CardProps> = () => {
         try {
           await register({ email, newPassword });
           setIsSignUp(false);
+          toast.success('Registration successful!');
         } catch (error) {
           console.error(error);
           setError('Failed to sign up. Please try again.');
@@ -144,6 +148,7 @@ const Login: React.FC<CardProps> = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

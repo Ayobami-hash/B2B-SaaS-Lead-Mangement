@@ -18,7 +18,7 @@ const AuthProvider = (props: ContainerProps) => {
 
   const login = async (credentials: { email: string; password: string }) => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/users/login', credentials, {
+      const response = await axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/login', credentials, {
         withCredentials: true,
       });
       const userData: User = response.data;
@@ -35,7 +35,7 @@ const AuthProvider = (props: ContainerProps) => {
     try {
       console.log('Registration credentials:', credentials2); // Log credentials
 
-      const response = await axios.post('http://127.0.0.1:5000/api/users/register', {
+      const response = await axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/register', {
         email: credentials2.email,
         password: credentials2.newPassword, // Ensure correct field name
       });
