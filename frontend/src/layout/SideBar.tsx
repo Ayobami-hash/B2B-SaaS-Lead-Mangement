@@ -25,7 +25,7 @@ const SideBar = () => {
   const handleClickLogout = async ( e: MouseEvent<HTMLButtonElement | HTMLLinkElement> ) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://127.0.0.1:5000/api/users/logout');
+      const res = await axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/logout');
       console.log(res.data.message);
       setUser(null);
       setIsActive('logout');
