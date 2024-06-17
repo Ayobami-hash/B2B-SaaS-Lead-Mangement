@@ -38,10 +38,10 @@ const Login: React.FC<CardProps> = () => {
           router.push('/home'); // Navigate to the home page
         } else {
           toast.error('invalid email or password!')
+          setError('Failed to log in. Please check your credentials.');
         }
       } catch (error) {
         console.error(error);
-        setError('Failed to log in. Please check your credentials.');
       }
     } else {
       if (confirmPassword !== newPassword) {
@@ -54,10 +54,10 @@ const Login: React.FC<CardProps> = () => {
             toast.success('Registration successful!');
           } else {
             toast.error('User already exists');
+            setError('Failed to sign up. Please try again.');
           }
         } catch (error) {
           console.error(error);
-          setError('Failed to sign up. Please try again.');
         }
       }
     }
