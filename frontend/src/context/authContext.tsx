@@ -16,7 +16,7 @@ const AuthProvider = (props: ContainerProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
-  const login = async (credentials: { email: string; password: string }) => {
+  const login = async (credentials: { email: string; password: string }): Promise<boolean> => {
     try {
       const response = await axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/login', credentials, {
         withCredentials: true,
@@ -24,10 +24,12 @@ const AuthProvider = (props: ContainerProps) => {
       const userData: User = response.data;
       setUser(userData);
       setIsLoggedIn(true);
+      return true; // Return true if login was successful
     } catch (error) {
       console.error('Failed to login', error);
       setUser(null);
       setIsLoggedIn(false);
+      return false; // Return false if login failed
     }
   };
 

@@ -18,7 +18,7 @@ export interface User {
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-type LoginFunction = (credentials: Credentials) => Promise<void>;
+type LoginFunction = (credentials: Credentials) => Promise<boolean>;
 type RegisterFunction = (credentials: Credentials2) => Promise<void>;
 
 type Credentials = {

@@ -31,10 +31,14 @@ const Login: React.FC<CardProps> = () => {
 
     if (!isSignUp) {
       try {
-        await login({ email, password });
-        setIsLoggedIn(true);
-        toast.success('Login successful!');
-        router.push('/home'); // Navigate to the home page
+        const loggedIn = await login({ email, password});
+        if (loggedIn){
+          setIsLoggedIn(true);
+          toast.success('Login successful!');
+          router.push('/home'); // Navigate to the home page
+        } else {
+          toast.error('invalid email or password!')
+        }
       } catch (error) {
         console.error(error);
         setError('Failed to log in. Please check your credentials.');
