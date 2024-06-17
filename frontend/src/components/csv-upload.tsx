@@ -36,7 +36,7 @@ const CSVUpload = () => {
 
   const handleConfirm = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/upload-csv', {
+      const response = await axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/upload-csv', {
         csvData,
         fieldMappings,
       });
