@@ -48,9 +48,13 @@ const Login: React.FC<CardProps> = () => {
         setError('Passwords do not match. Please try again.');
       } else {
         try {
-          await register({ email, newPassword });
-          setIsSignUp(false);
-          toast.success('Registration successful!');
+          const created = await register({ email, newPassword });
+          if(created){
+            setIsSignUp(false);
+            toast.success('Registration successful!');
+          } else {
+            toast.error('User already exists');
+          }
         } catch (error) {
           console.error(error);
           setError('Failed to sign up. Please try again.');

@@ -33,7 +33,7 @@ const AuthProvider = (props: ContainerProps) => {
     }
   };
 
-  const register = async (credentials2: { email: string; newPassword: string }) => {
+  const register = async (credentials2: { email: string; newPassword: string }): Promise<boolean> => {
     try {
       console.log('Registration credentials:', credentials2); // Log credentials
 
@@ -42,9 +42,11 @@ const AuthProvider = (props: ContainerProps) => {
         password: credentials2.newPassword, // Ensure correct field name
       });
 
-      console.log('Registration response:', response.data); // Log response data
+      // console.log('Registration response:', response.data); // Log response data
+      return true;
     } catch (error) {
       console.error('Failed to register', error);
+      return false;
     }
   };
 

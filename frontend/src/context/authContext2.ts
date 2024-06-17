@@ -19,7 +19,7 @@ export interface User {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 type LoginFunction = (credentials: Credentials) => Promise<boolean>;
-type RegisterFunction = (credentials: Credentials2) => Promise<void>;
+type RegisterFunction = (credentials: Credentials2) => Promise<boolean>;
 
 type Credentials = {
   email: string;
