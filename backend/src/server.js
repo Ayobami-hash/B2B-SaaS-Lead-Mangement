@@ -15,7 +15,7 @@ const upload = multer({ dest: 'uploads/' });
 const app = express();
 
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json({ limit: '50mb' }));
