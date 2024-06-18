@@ -21,7 +21,7 @@ const processCSVData = async (csvData, fieldMappings) => {
         firstName: row[fieldMappings['First Name']],
         lastName: row[fieldMappings['Last Name']],
         email: row[fieldMappings['Email']],
-        companyId: row[fieldMappings['Company ID']],
+        companyId: null,  // This will be set after finding or creating the company
       };
 
       const companyData = {
@@ -33,6 +33,16 @@ const processCSVData = async (csvData, fieldMappings) => {
 
       const trustScore = calculateTrustScore(row[fieldMappings['Last Updated']]);
 
+      let existingCompany = await Company.findOne({ linkedInUrl: companyData.linkedInUrl });
+
+      if (!existingCompany) {
+        existingCompany = await Company.create(companyData);
+      } else {
+        await Company.updateOne({ _id: existingCompany._id }, { $set: companyData });
+      }
+
+      leadData.companyId = existingCompany._id;
+
       const existingLead = await Lead.findOne({
         $or: [{ email: leadData.email }, { linkedInUrl: leadData.linkedInUrl }],
       });
@@ -43,14 +53,6 @@ const processCSVData = async (csvData, fieldMappings) => {
       } else {
         await Lead.create({ ...leadData, trustScore });
         recordsCreated++;
-      }
-
-      const existingCompany = await Company.findOne({ linkedInUrl: companyData.linkedInUrl });
-
-      if (existingCompany) {
-        await Company.updateOne({ _id: existingCompany._id }, { $set: companyData });
-      } else {
-        await Company.create(companyData);
       }
     } catch (error) {
       console.error('Error processing row:', error);
