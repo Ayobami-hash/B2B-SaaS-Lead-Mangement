@@ -56,7 +56,7 @@ const CSVUpload = () => {
 
         <div className="mb-4">
           <h2 className="text-xl font-semibold">Lead Info:</h2>
-          {['LinkedIn URL', 'First Name', 'Last Name', 'Email'].map((field, index) => (
+          {['LinkedIn UrL', 'First Name', 'Last Name', 'Email'].map((field, index) => (
             <div key={index} className="mb-2">
               <label className="block mb-1">{field}:</label>
               <select
@@ -75,7 +75,7 @@ const CSVUpload = () => {
 
         <div className="mb-4">
           <h2 className="text-xl font-semibold">Company Info:</h2>
-          {['LinkedIn UrL', 'Company Name', 'Website', 'Phone'].map((field, index) => (
+          {['Company Linkedin Url', 'Company Name', 'Company Website', 'Phone numbers'].map((field, index) => (
             <div key={index} className="mb-2">
               <label className="block mb-1">{field}:</label>
               <select
