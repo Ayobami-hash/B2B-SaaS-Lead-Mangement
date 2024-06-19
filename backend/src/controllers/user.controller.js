@@ -161,7 +161,7 @@ exports.validate = async (req, res) => {
     if (err) return res.sendStatus(403); // Token is invalid or expired
 
     // Fetch user from the database or mock data
-    const loggedInUser = users.find(u => u._id === user._id);
+    const loggedInUser = users.find(u => u.id === user._id);
     if (!loggedInUser) return res.sendStatus(404); // User not found
 
     res.json({ user: loggedInUser });
