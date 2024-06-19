@@ -152,12 +152,12 @@ exports.validate = async (req, res) => {
   if (!token) {
     return res.status(401).send({ message: 'Access denied. No token provided.' });
   }
-  
-  if (token == null) return res.sendStatus(401); // No token found
 
-  jwt.verify(token, process.env.JWT_SECRET, (err) => {
-    if (err) return res.sendStatus(403); // Token is invalid or expired
-
-    res.json({ token: token });
-  });
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    res.status(200).send({ token: token });
+  } catch (err) {
+    res.status(400).send({ message: 'Invalid token.' });
+  }
 };

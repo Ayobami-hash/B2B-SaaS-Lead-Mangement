@@ -83,7 +83,6 @@ router.delete(
 
 router.get(
   '/validate', 
-  userController.authenticate,
   userController.validate
 );
 
