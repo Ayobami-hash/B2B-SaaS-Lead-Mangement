@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContextType, User } from './authContext2';
 
@@ -15,6 +15,25 @@ axios.defaults.withCredentials = true;
 const AuthProvider = (props: ContainerProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
+
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Validate the token with the backend
+      axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/validate', {
+        withCredentials: true,
+      })
+        .then(response => {
+          setUser(response.data.user);
+          setIsLoggedIn(true);
+        })
+        .catch(() => {
+          localStorage.removeItem('token');
+          setIsLoggedIn(false);
+        });
+    }
+  }, []);
 
   const login = async (credentials: { email: string; password: string }): Promise<boolean> => {
     try {
