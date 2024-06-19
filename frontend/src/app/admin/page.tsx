@@ -20,18 +20,22 @@ const Admin = () => {
     const [users, setUsers] = useState<User2[]>([]);
     const [error, setError] = useState<string | null>(null);
     const { user, setUser, isLoggedIn, setIsLoggedIn } = useAuth();
+    const [loggedUser, setLoggedUser] = useState<string | null>(null);
     const router = useRouter();
 
 
-    const loggedUser = localStorage.getItem('user');
 
 
     useEffect(() => {
       
-      // if (!isLoggedIn && !user ) {
-      //   router.push('/');
-      //   return;
-      // }
+      const getLoggedUser = () => {
+        if (typeof window !== 'undefined') {
+          const user = window.localStorage.getItem('user');
+          setLoggedUser(user);
+        }
+      };
+  
+      getLoggedUser();
 
   
       fetchUsers();
