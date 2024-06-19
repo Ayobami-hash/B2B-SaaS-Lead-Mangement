@@ -10,8 +10,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 const SideBar = () => {
-  const [ isActive, setIsActive ] = useState<String>('');
-  const { setUser } = useAuth();
+  // const [ isActive, setIsActive ] = useState<String>('');
+  const { setUser, isActive, setIsActive } = useAuth();
   const router = useRouter();
 
   const clearStorage = () => {

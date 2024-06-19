@@ -80,9 +80,11 @@ const AuthProvider = (props: ContainerProps) => {
       return false;
     }
   };
+  const [ isActive, setIsActive ] = useState<string>('home');
+
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, login, register }}>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, user, setUser, login, register, isActive, setIsActive }}>
       {props.children}
     </AuthContext.Provider>
   );
