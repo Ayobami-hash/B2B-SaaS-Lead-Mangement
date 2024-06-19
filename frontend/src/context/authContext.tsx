@@ -12,20 +12,30 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 axios.defaults.withCredentials = true;
 
+
 const AuthProvider = (props: ContainerProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [user, setUser] = useState<User | null>(null);
 
-
+  const getCookie = (name: string) => {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  };
+  
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
+    const token = getCookie('token') || null;
+    if (!token) {
       // Validate the token with the backend
       axios.post('https://b2b-saas-lead-mangement-3.onrender.com/api/users/validate', {
         withCredentials: true,
       })
         .then(response => {
-          console.log(response.data.user);
           setUser(response.data.user);
           setIsLoggedIn(true);
         })
@@ -44,6 +54,7 @@ const AuthProvider = (props: ContainerProps) => {
       const userData: User = response.data;
       setUser(userData);
       setIsLoggedIn(true);
+      localStorage.setItem('user', JSON.stringify(userData)); // Store user data in localStorage
       return true; // Return true if login was successful
     } catch (error) {
       console.error('Failed to login', error);

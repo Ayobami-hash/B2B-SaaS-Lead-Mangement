@@ -14,6 +14,10 @@ const SideBar = () => {
   const { setUser } = useAuth();
   const router = useRouter();
 
+  const clearStorage = () => {
+    localStorage.clear(); // Clear all data from localStorage
+  };
+
   const handleClickHome = ( e: MouseEvent<HTMLButtonElement | HTMLLinkElement> ) => {
     e.preventDefault();
     setIsActive('home');
@@ -29,6 +33,7 @@ const SideBar = () => {
       console.log(res.data.message);
       setUser(null);
       setIsActive('logout');
+      clearStorage();
       router.push('/'); // Navigate to the login page
     } catch (error) {
       console.error(error);

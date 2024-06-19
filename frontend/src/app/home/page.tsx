@@ -6,11 +6,14 @@ import NavBar from '@/layout/Nav';
 import { useAuth } from '@/context/authContext';
 
 const HomePage = () => {
-  const { user } = useAuth();
+  const { user, isLoggedIn } = useAuth();
+
+  const loggedUser = localStorage.getItem('user');
+
   return (
     <>
     {
-      user ? 
+      loggedUser ? 
             <>
               <SideBar />
               <NavBar />

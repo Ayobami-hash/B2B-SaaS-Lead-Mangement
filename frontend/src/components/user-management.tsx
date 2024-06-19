@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { User } from '@/context/authContext2';
 import { useEffect, useState } from 'react';
 
-interface User2 {
+export interface User2 {
   _id: string;
   email: string;
   role: string;
@@ -19,7 +19,7 @@ interface UserManagementPageProps {
 
 const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
   const { user, setUser, isLoggedIn, setIsLoggedIn } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User2 | null>(null);
@@ -32,6 +32,10 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
     }
     return null;
   };
+
+  // Check if the component is running in a browser environment
+  const isBrowser = typeof window !== 'undefined';
+  const router = isBrowser ? useRouter() : null; // Conditionally use useRouter
 
   const authToken = getCookie('token');
   console.log(`${authToken}`);
@@ -57,7 +61,7 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
   };
 
   const handleRoleChange = async (newRole: string) => {
-    if (selectedUser) {
+    if (selectedUser && isBrowser && router) {
       try {
         // Make API call to update user role
         await axios.put(`https://b2b-saas-lead-mangement-3.onrender.com/api/users/${selectedUser._id}/role`, { role: newRole }, {
@@ -65,6 +69,8 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
         });
         // Update UI or refresh data as needed
         closeEditModal();
+        router.refresh();
+        window.location.reload();
       } catch (error) {
         console.error('Error updating user role', error);
       }
@@ -72,7 +78,7 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
   };
 
   const handleDeleteUser = async () => {
-    if (selectedUser) {
+    if (selectedUser && isBrowser && router) {
       try {
         // Make API call to delete user by ID
         await axios.delete(`https://b2b-saas-lead-mangement-3.onrender.com/api/users/${selectedUser._id}`, {
@@ -80,6 +86,8 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
         });
         // Update UI or refresh data as needed
         closeDeleteModal();
+        router.refresh();
+        window.location.reload();
       } catch (error) {
         console.error('Error deleting user', error);
       }
