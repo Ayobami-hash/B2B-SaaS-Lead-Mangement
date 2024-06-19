@@ -24,7 +24,7 @@ const Admin = () => {
     const router = useRouter();
 
 
-
+    const notAllowed = user?.role === 'user';
 
     useEffect(() => {
       
@@ -72,7 +72,7 @@ const Admin = () => {
 
   return (
     <>
-    {loggedUser ? <>
+    {loggedUser && !notAllowed ? <>
       <SideBar />
       <NavBar />
       <div className='relative h-[45em] pt-8'>
@@ -96,7 +96,7 @@ const Admin = () => {
       </div>
     </> : <>
        <div className='flex flex-col gap-3 items-center justify-center text-4xl h-screen opacity-15'>
-          <h1>User not logged in</h1>
+          <h1>User not allowed access</h1>
           <Link className='text-xl' href='/'>Go to Login page</Link>
       </div>
     </>

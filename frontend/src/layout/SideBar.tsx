@@ -4,15 +4,31 @@ import Link from 'next/link';
 import { GoHome } from "react-icons/go";
 import { FaRegUserCircle } from "react-icons/fa";
 import { TbDoorExit } from "react-icons/tb";
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useAuth } from '@/context/authContext';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 const SideBar = () => {
   // const [ isActive, setIsActive ] = useState<String>('');
-  const { setUser, isActive, setIsActive } = useAuth();
+  const { user, setUser, isActive, setIsActive } = useAuth();
   const router = useRouter();
+
+  const [loggedUser, setLoggedUser] = useState<string | null>(null);
+
+  useEffect(() => {
+      
+    const getLoggedUser = () => {
+      if (typeof window !== 'undefined') {
+        const user = window.localStorage.getItem('user');
+        setLoggedUser(user);
+      }
+    };
+
+    getLoggedUser();
+  }, []);
+
+  const notAllowed = user?.role === 'user';
 
   const clearStorage = () => {
     localStorage.clear(); // Clear all data from localStorage
@@ -51,7 +67,7 @@ const SideBar = () => {
           </Link>
         </button>
         <button onClick={(e) => handleClickAdmin(e)}>
-          <Link href="/admin" className={`flex gap-6 items-center justify-start px-10 py-2 rounded-lg  ${ isActive === 'admin' ? 'bg-violet-400 text-white' : 'text-violet-800'} hover:bg-violet-400 hover:text-white hover:scale-105 delay-75`}>
+          <Link href="/admin" className={`flex gap-6 items-center justify-start px-10 py-2 rounded-lg  ${ isActive === 'admin' ? 'bg-violet-400 text-white' : 'text-violet-800'} hover:bg-violet-400 hover:text-white hover:scale-105 delay-75 ${ notAllowed && 'hidden'} `}>
             <FaRegUserCircle size={22} />
             Admin
           </Link>

@@ -37,8 +37,6 @@ const UserManagementPage: React.FC<UserManagementPageProps> = ({ users }) => {
   const isBrowser = typeof window !== 'undefined';
   const router = isBrowser ? useRouter() : null; // Conditionally use useRouter
 
-  const authToken = getCookie('token');
-  console.log(`${authToken}`);
 
   const openEditModal = (user: User2) => {
     setSelectedUser(user);
