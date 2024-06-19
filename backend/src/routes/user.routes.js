@@ -82,7 +82,7 @@ router.delete(
 );
 
 router.get(
-  '/validate', 
+  '//validate', 
   validateRequest,
   userController.validate
 );
