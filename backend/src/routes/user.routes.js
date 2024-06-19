@@ -81,4 +81,6 @@ router.delete(
   userController.delete
 );
 
+router.get('/validate', userController.validate)
+
 module.exports = router;

@@ -146,3 +146,24 @@ exports.delete = async (req, res) => {
     res.status(500).send({ message: error.message });
   }
 };
+
+exports.validate = async (req, res) => {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.status(401).send({ message: 'Access denied. No token provided.' });
+  }
+  
+  if (token == null) return res.sendStatus(401); // No token found
+
+  const users = await User.find();
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403); // Token is invalid or expired
+
+    // Fetch user from the database or mock data
+    const loggedInUser = users.find(u => u._id === user._id);
+    if (!loggedInUser) return res.sendStatus(404); // User not found
+
+    res.json({ user: loggedInUser });
+  });
+};
