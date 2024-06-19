@@ -155,8 +155,10 @@ exports.validate = async (req, res) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const users = await User.find();
     req.user = decoded;
-    res.status(200).send({ token: token, user: req.user });
+    const loggedInUser = users.find(u => u.id === req.user.id);
+    res.status(200).send({ token: token, user: loggedInUser });
   } catch (err) {
     res.status(400).send({ message: 'Invalid token.' });
   }
