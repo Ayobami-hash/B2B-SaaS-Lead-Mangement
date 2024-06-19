@@ -81,6 +81,6 @@ router.delete(
   userController.delete
 );
 
-router.get('/validate', userController.validate)
+router.get('/validate',  param('id').isMongoId().withMessage('Invalid user ID'), userController.validate)
 
 module.exports = router;
