@@ -84,7 +84,6 @@ router.delete(
 router.get(
   '/validate', 
   userController.authenticate,
-  param('id').isMongoId().withMessage('Invalid user ID'), 
   userController.validate
 );
 

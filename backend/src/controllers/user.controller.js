@@ -155,15 +155,9 @@ exports.validate = async (req, res) => {
   
   if (token == null) return res.sendStatus(401); // No token found
 
-  const users = await User.find();
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err) => {
     if (err) return res.sendStatus(403); // Token is invalid or expired
 
-    // Fetch user from the database or mock data
-    const loggedInUser = users.find(u => u.id === user._id);
-    if (!loggedInUser) return res.sendStatus(404); // User not found
-
-    res.json({ user: loggedInUser });
+    res.json({ token: token });
   });
 };
