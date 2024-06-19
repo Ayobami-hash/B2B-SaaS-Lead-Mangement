@@ -81,8 +81,8 @@ router.delete(
   userController.delete
 );
 
-router.get(
-  '//validate', 
+router.post(
+  '/validate', 
   validateRequest,
   userController.validate
 );
