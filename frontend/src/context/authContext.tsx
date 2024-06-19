@@ -25,6 +25,7 @@ const AuthProvider = (props: ContainerProps) => {
         withCredentials: true,
       })
         .then(response => {
+          console.log(response.data.user);
           setUser(response.data.user);
           setIsLoggedIn(true);
         })

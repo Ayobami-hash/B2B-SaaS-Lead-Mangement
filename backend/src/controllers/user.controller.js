@@ -158,7 +158,7 @@ exports.validate = async (req, res) => {
     const users = await User.find();
     req.user = decoded;
     const loggedInUser = users.find(u => u.id === req.user.id);
-    res.status(200).send({ token: token, user: loggedInUser });
+    res.status(200).send({ token: token, user: { email: loggedInUser.email, role: loggedInUser.role} });
   } catch (err) {
     res.status(400).send({ message: 'Invalid token.' });
   }
