@@ -32,9 +32,7 @@ const Admin = () => {
       //   router.push('/');
       //   return;
       // }
-      if (!user){
-        // setUser(loggedUser)
-      }
+
   
       fetchUsers();
     }, []);
